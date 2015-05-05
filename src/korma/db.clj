@@ -114,12 +114,12 @@
   "Create a database specification for a postgres database. Opts should include
   keys for :db, :user, and :password. You can also optionally set host and
   port."
-  [{:keys [host port db make-pool?]
-    :or {host "localhost", port 5432, db "", make-pool? true}
+  [{:keys [host port db default-schema make-pool?]
+    :or {host "localhost", port 5432, db "", default-schema "", make-pool? true}
     :as opts}]
   (merge {:classname "org.postgresql.Driver" ; must be in classpath
           :subprotocol "postgresql"
-          :subname (str "//" host ":" port "/" db)
+          :subname (str "//" host ":" port "/" db (if (not (empty? default-schema)) (str "?searchpath=" default-schema)))
           :make-pool? make-pool?}
          opts))
 

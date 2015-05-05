@@ -106,6 +106,20 @@
            (postgres {:host "host"
                       :port "port"
                       :db "db"
+                      :make-pool? false}))))
+  (testing "postgres - options selected with default schema"
+    (is (= {:db "db"
+            :port "port"
+            :host "host"
+            :classname "org.postgresql.Driver"
+            :subprotocol "postgresql"
+            :subname "//host:port/db?searchpath=schema"
+            :default-schema "schema"
+            :make-pool? false}
+           (postgres {:host "host"
+                      :port "port"
+                      :db "db"
+                      :default-schema "schema"
                       :make-pool? false})))))
 
 (deftest test-oracle
